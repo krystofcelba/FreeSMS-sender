@@ -24,42 +24,46 @@ class FreeSMS:
 		platformId = "harmattan"  #default harmattan
 		if self.args.p:
 			platformId = self.args.p
-		
 
 		#load gui
 		self.gui = None
 		if platformId == "harmattan":
 			from gui import qml
 			self.gui = qml.gui(self)
+		elif platformId == "CLI":
+			from gui import cli
+			self.gui = cli.gui(self)
 
 		#start main loop
 		self.gui.startMainLoop()
 			
 	def setSMSSent(self, sms):
 		if self.debug:
-			print("SMS sent")		
+			print("SMS sent")
+		self.gui.setSMSSent(sms)		
 	
 	def setSMSNotSent(self, sms):
 		if self.debug:
 			print("Error while sending SMS. Error: %s" % sms.error)
+		self.gui.showError(sms)
 
-	def showCaptcha(self, captcha):
+	def showCaptcha(self, sms):
 		if self.debug:
 			print("show captcha")
-		self.gui.showCaptcha(captcha)
+		self.gui.showCaptcha(sms)
 
 	def cancelSendingSMS(self):
 		self.gate.cancelSending()
+
+	def getGetwaysList(self):
+		return gateways.GATEWAYS_LIST
 
 	def sendSMS(self, sms):
 		if self.debug:
 			print("Sending SMS. Text: %s, toNum: %s, gateway: %s" % (sms.text, sms.toNum, sms.gateway))
 		self.gate = None
 		self.currSMS = sms
-		if sms.gateway == "PoslatSMS.cz":
-			self.gate = gateways.PoslatsmsGateway.Gateway(self)
-		elif sms.gateway == "O2 CZ":
-			self.gate = gateways.O2CZGateway.Gateway(self)
+		self.gate = gateways.GATEWAYS_LIST[sms.gateway].Gateway(self)
 
 		self.gate.sendSMS(self.currSMS)
 		

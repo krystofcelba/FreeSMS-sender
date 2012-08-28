@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from PySide import QtCore, QtGui
 from PySide.QtCore import QObject
 from PySide.QtGui import *
@@ -37,7 +37,9 @@ class QMLHelper(QObject):
 		sms.text = text
 		sms.toNum = toNum
 		#sms.gateway = "PoslatSMS.cz"
-		sms.gateway = "O2 CZ"
+		#sms.gateway = "O2 CZ"
+		sms.gateway = 3
+		#sms.gateway = "smszdarma.org"
 		self.freeSms.sendSMS(sms)
 
 	@QtCore.Slot()
@@ -65,9 +67,14 @@ class gui(QObject):
 		QObject.__init__(self)
 		self.freeSms = freeSms
 		
-	def showCaptcha(self, captcha):
-		self.captchaData = captcha
+	def showCaptcha(self, sms):
+		self.captchaData = sms.captchaImageData
 		self.showCaptchaSignal.emit() #control gui must be in main thread
+	
+	def setSMSSent(self, sms):
+		pass
+	def showError(self, sms):
+		pass
 		
 	def startMainLoop(self):
 		self.app = QApplication(sys.argv) # create the application
