@@ -18,12 +18,14 @@ class BaseGateway:
 		self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj)) 
 		self.opener.addheaders.append(('User-agent', "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko)Chrome/6.0.472.62 Safari/534.3"))
 		self.downloadThread = None
-
-	def getName(self):
+	
+	@classmethod
+	def getName(cls):
 		"""Gateway name"""
 		return "BaseGateway"	
 	
-	def getMaxLength(self):
+	@classmethod	
+	def getMaxLength(cls):
 		"""Max SMS length"""
 		return 0
 	

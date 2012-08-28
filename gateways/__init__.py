@@ -1,7 +1,4 @@
-import os
-for module in os.listdir(os.path.dirname(__file__)):
-    if module == '__init__.py' or module[-3:] != '.py':
-        continue
-    __import__(module[:-3], locals(), globals())
-del module
+import O2CZ, Poslatsms, SMSZdarma, TmobileCZ
+
+GATEWAYS_LIST = [O2CZ, Poslatsms, SMSZdarma, TmobileCZ] #You must add your gateway here
 
