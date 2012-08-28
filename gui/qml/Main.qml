@@ -36,7 +36,6 @@ PageStackWindow {
 		id: captchaDialog
 		property alias captchaContent: captchaImage.source
 		property alias captchaFieldText: captchaField.text
-		//title:
 
 		onAccepted: {
 			helper.setCaptcha(captchaField.text)

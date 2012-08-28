@@ -14,7 +14,7 @@ Page {
     TextField {
         id: toField
 		placeholderText: qsTr("Recipient number")
-		text: debug ? "605961068" : "";
+		text: debug ? "732484812" : "";
         anchors {
             top: header.bottom
             left: parent.left; right: sendB.left
